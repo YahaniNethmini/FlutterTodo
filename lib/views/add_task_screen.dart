@@ -115,9 +115,64 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               }
             ),
             SizedBox(height: 30),
-            // Center(
-            //   child: ElevatedButton(),
-            // )
+            Center(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.deepPurple,
+                  foregroundColor: Colors.white,
+                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+                child: Text(widget.task != null
+                    ? "Edit Task"
+                    : "Add Task",
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+                onPressed: () {
+                  if(titleController.text.isEmpty || descriptionController.text.isEmpty || selectedDate == null){
+                    Get.snackbar(
+                      "Error", "Please fill all the fields",
+                      backgroundColor: Colors.redAccent,
+                      colorText: Colors.white
+                    );
+                    return;
+                  }
+
+                  //edit/update
+                  if(widget.task != null){
+                    var updatedTask = Task(
+                      title: titleController.text,
+                      description: descriptionController.text,
+                      dueDate: selectedDate!,
+                      isCompleted: widget.task!.isCompleted,
+                    );
+                    taskController.editTask(widget.index!, updatedTask);
+                    Get.back();
+                    Get.snackbar("Success", "Task Updated Successfully",
+                      backgroundColor: Colors.green,
+                      colorText: Colors.white,
+                    );
+                  } else {
+                    //add new task
+                    var newTask = Task(
+                      title: titleController.text,
+                      description: descriptionController.text,
+                      dueDate: selectedDate!,
+                    );
+                    taskController.addTask(newTask);
+                    Get.back();
+                    Get.snackbar("Success", "Task Added Successfully",
+                      backgroundColor: Colors.green,
+                      colorText: Colors.white,
+                    );
+                  }
+                },
+              ),
+            )
           ],
         ),
       ),
