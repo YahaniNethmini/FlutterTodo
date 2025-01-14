@@ -106,8 +106,68 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget taskCard(Task task, int index) {
     return Card(
-      elevation: 3,
-      child: ListTile(),
+      elevation: 10,
+      color: Colors.white,
+      margin: EdgeInsets.symmetric(vertical: 8),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: ListTile(
+        contentPadding: EdgeInsets.all(20),
+        leading: Icon(
+          Icons.task_alt,
+          color: task.isCompleted
+              ? Colors.green
+              : Colors.grey,
+        ),
+        title: Text(
+          task.title,
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+            decoration: task.isCompleted
+                ? TextDecoration.lineThrough
+                : null,
+          ),
+        ),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Divider(),
+            Text(
+              task.description,
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey.shade600,
+              ),
+            ),
+        Divider(),
+            Text(
+              '${task.dueDate!.toLocal()}'.split(' ')[0],
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.deepPurple,
+                fontWeight: FontWeight.w500,
+                decoration: task.isCompleted
+                    ? TextDecoration.lineThrough
+                    : null,
+              ),
+            ),
+          ],
+        ),
+        trailing: IconButton(
+            onPressed: () => taskController.toggleTaskCompletion(index),
+            icon: Icon(
+              task.isCompleted
+                  ? Icons.check_circle
+                  : Icons.circle_outlined,
+              color: task.isCompleted
+                  ? Colors.green
+                  : Colors.grey,
+            )
+        ),
+      ),
     );
   }
 }

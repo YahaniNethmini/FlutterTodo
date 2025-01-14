@@ -79,7 +79,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             ),
             SizedBox(height: 10),
             TextField(
-              controller: titleController,
+              controller: descriptionController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
